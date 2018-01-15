@@ -1,6 +1,8 @@
 package com.example.entity;
 
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -13,17 +15,16 @@ public class CityDef implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "city_def_seq")
     @SequenceGenerator(sequenceName = "city_defs",name = "city_def_seq",allocationSize = 1)
-    @Column(name = "def_id", updatable = false, nullable = false)
+    @Column(name = "def_id"/*, updatable = false, nullable = false*/)
     Long defId;
 
     @Column
     String name;
 
-//    @Column(name="city_id")
-//    Long cityId;
-
-    @ManyToOne
+    @ManyToOne//(cascade = CascadeType.ALL)
     @JoinColumn(name="city")
+    @JsonIgnoreProperties(ignoreUnknown=true)
+    //@JsonIgnoreProperties({"cityDef"})
     City city;
 
     public static long getSerialVersionUID() {
@@ -62,5 +63,14 @@ public class CityDef implements Serializable {
 
     public CityDef() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "CityDef{" +
+                "defId=" + defId +
+                ", name='" + name + '\'' +
+                ", city=" + city +
+                '}';
     }
 }

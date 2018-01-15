@@ -10,6 +10,8 @@ import com.example.entity.City;
 import com.example.entity.CityDef;
 import com.example.repo.CityDefRepo;
 import com.example.repo.CityRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping
 public class RestPersonController {
+    
 
     @Autowired
     CityRepo сityRepo;
@@ -46,14 +49,20 @@ public class RestPersonController {
     public CityDef saveNewDef(@RequestBody CityDef cityDef)throws Exception{
 
         Long city_id = cityDef.getCity().getCityId();
-        Long city_def_id = cityDefRepo.save(cityDef).getDefId();
 
         City city = сityRepo.findByCityId(city_id);
 
-        city.setCityDef(cityDef);
+        cityDef.setCity(city);
+
+
+        CityDef cityDef1 = cityDefRepo.save(cityDef);
+
+        city.setCityDef(cityDef1);
 
         сityRepo.save(city);
-       return cityDefRepo.save(cityDef);
+
+
+       return cityDef1;
     }
 
     @GetMapping("/get_city_dto")
