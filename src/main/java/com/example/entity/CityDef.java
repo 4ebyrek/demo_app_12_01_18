@@ -15,16 +15,15 @@ public class CityDef implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "city_def_seq")
     @SequenceGenerator(sequenceName = "city_defs",name = "city_def_seq",allocationSize = 1)
-    @Column(name = "def_id"/*, updatable = false, nullable = false*/)
+    @Column(name = "def_id")
     Long defId;
 
     @Column
     String name;
 
-    @ManyToOne//(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="city")
-    @JsonIgnoreProperties(ignoreUnknown=true)
-    //@JsonIgnoreProperties({"cityDef"})
+    @JsonIgnoreProperties(value = {"cityDef"},allowSetters=true)
     City city;
 
     public static long getSerialVersionUID() {

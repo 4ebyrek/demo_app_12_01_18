@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping
 public class RestPersonController {
-    
+
 
     @Autowired
     CityRepo сityRepo;
@@ -54,13 +54,11 @@ public class RestPersonController {
 
         cityDef.setCity(city);
 
-
         CityDef cityDef1 = cityDefRepo.save(cityDef);
 
         city.setCityDef(cityDef1);
 
         сityRepo.save(city);
-
 
        return cityDef1;
     }
