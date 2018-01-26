@@ -1,26 +1,17 @@
 package com.example.Service.DTO;
 
+import lombok.Data;
+
+import java.util.Objects;
+import java.util.UUID;
+
+@Data
 public class CityDTO {
 
+    UUID id;
 
     String location;
 
     String name;
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
 }

@@ -2,11 +2,14 @@ package com.example.repo;
 
 
 import com.example.entity.City;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface CityRepo extends CrudRepository<City,Long>{
+import java.util.UUID;
 
-    City findByCityId(Long id);
+@SuppressWarnings("unused")
+@Repository
+public interface CityRepo extends JpaRepository<City,UUID> {
+
 }

@@ -2,22 +2,34 @@ package com.example.entity;
 
 
 import com.fasterxml.jackson.annotation.*;
+import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.UUID;
+
 
 @Entity
 @Table(name="city")
-
+@Data
 public class City implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "cities")
-    @SequenceGenerator(sequenceName = "cities",name = "cities",allocationSize = 1)
-    @Column(name = "city_id")
-    Long cityId;
+    @Column(name = "city_id", updatable = false, nullable = false)
+    protected UUID cityId;
+
+    public City() {
+        cityId = UUID.randomUUID();
+    }
+
+    public City(UUID id){
+        this.cityId = id;
+    }
 
     @Column
     String location;
@@ -26,45 +38,4 @@ public class City implements Serializable {
     @JoinColumn(name="cityDef")
     @JsonIgnoreProperties("city")
     CityDef cityDef;
-
-    public City() {
-    }
-
-    public City(String location, CityDef cityDef) {
-        this.location = location;
-        this.cityDef = cityDef;
-    }
-
-    public Long getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Long cityId) {
-        this.cityId = cityId;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public CityDef getCityDef() {
-        return cityDef;
-    }
-
-    public void setCityDef(CityDef cityDef) {
-        this.cityDef = cityDef;
-    }
-
-    @Override
-    public String toString() {
-        return "City{" +
-                "cityId=" + cityId +
-                ", location='" + location + '\'' +
-                ", cityDef=" + cityDef +
-                '}';
-    }
 }
